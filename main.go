@@ -4,10 +4,11 @@ import (
 	"net/http"
 	"fmt"
 	"os"
+	"io"
 )
 
-type Reader struct{
-	
+type Reader interface{
+	Read([]byte) (int, error)
 }
 
 func main() {
@@ -18,11 +19,25 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println(resp)
-	fmt.Println(resp.Status)
-	fmt.Println(resp.StatusCode)
-	fmt.Println(resp.Header)
-	fmt.Println(resp.Body.Read(100, error))
+	//fmt.Println(resp)
+	//fmt.Println(resp.Status)
+	//fmt.Println(resp.StatusCode)
+	//fmt.Println(resp.Header)
+
+	// create byte slice
+	//bs := make([]byte, 99999)
+	//// read body into byte slice
+	//resp.Body.Read(bs)
+	//
+	//fmt.Println(string(bs))
+
+	// OR
+	io.Copy(os.Stdout, resp.Body)
+
 }
+
+//func () Reader(){
+//
+//}
 
 
